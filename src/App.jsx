@@ -12,7 +12,31 @@ import FAQPage from './pages/FAQPage'
 import OurWorkPage from './pages/OurWorkPage'
 import ServicesPage from './pages/ServicesPage'
 import TestimonialsPage from './pages/TestimonialsPage'
+// Add these imports alongside the existing ones:
+import TeamPage from './pages/TeamPage'
+import InternshipPage from './pages/InternshipPage'
+import WebDesignPage from './pages/WebDesignPage'
+import SEOPage from './pages/SEOPage'
+import GoogleAdsPage from './pages/GoogleAdsPage'
+import SocialMediaPage from './pages/SocialMediaPage'
+import DigitalMarketingPage from './pages/DigitalMarketingPage'
+import AIPhotoPage from './pages/AIPhotoPage'
+import AIVideoPage from './pages/AIVideoPage'
+import LivechatPage from './pages/LivechatPage'
+import MiniPackagesPage from './pages/MiniPackagesPage'
 
+// Add these routes inside <Routes> after the existing ones:
+<Route path="/team/*" element={<TeamPage />} />
+<Route path="/internship/*" element={<InternshipPage />} />
+<Route path="/web-design/*" element={<WebDesignPage />} />
+<Route path="/seo/*" element={<SEOPage />} />
+<Route path="/google-ads/*" element={<GoogleAdsPage />} />
+<Route path="/social-media/*" element={<SocialMediaPage />} />
+<Route path="/internet-marketing/*" element={<DigitalMarketingPage />} />
+<Route path="/ai-photo-packages/*" element={<AIPhotoPage />} />
+<Route path="/ai-video-packages/*" element={<AIVideoPage />} />
+<Route path="/livechat-packages/*" element={<LivechatPage />} />
+<Route path="/mini-packages/*" element={<MiniPackagesPage />} />
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => { window.scrollTo(0, 0) }, [pathname])
