@@ -24,19 +24,6 @@ import AIPhotoPage from './pages/AIPhotoPage'
 import AIVideoPage from './pages/AIVideoPage'
 import LivechatPage from './pages/LivechatPage'
 import MiniPackagesPage from './pages/MiniPackagesPage'
-
-// Add these routes inside <Routes> after the existing ones:
-<Route path="/team/*" element={<TeamPage />} />
-<Route path="/internship/*" element={<InternshipPage />} />
-<Route path="/web-design/*" element={<WebDesignPage />} />
-<Route path="/seo/*" element={<SEOPage />} />
-<Route path="/google-ads/*" element={<GoogleAdsPage />} />
-<Route path="/social-media/*" element={<SocialMediaPage />} />
-<Route path="/internet-marketing/*" element={<DigitalMarketingPage />} />
-<Route path="/ai-photo-packages/*" element={<AIPhotoPage />} />
-<Route path="/ai-video-packages/*" element={<AIVideoPage />} />
-<Route path="/livechat-packages/*" element={<LivechatPage />} />
-<Route path="/mini-packages/*" element={<MiniPackagesPage />} />
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => { window.scrollTo(0, 0) }, [pathname])
@@ -70,6 +57,17 @@ function AppInner() {
           <Route path="/our-work/*" element={<OurWorkPage />} />
           <Route path="/services/*" element={<ServicesPage />} />
           <Route path="/testimonials/*" element={<TestimonialsPage />} />
+          <Route path="/team/*" element={<TeamPage />} />
+<Route path="/internship/*" element={<InternshipPage />} />
+<Route path="/web-design/*" element={<WebDesignPage />} />
+<Route path="/seo/*" element={<SEOPage />} />
+<Route path="/google-ads/*" element={<GoogleAdsPage />} />
+<Route path="/social-media/*" element={<SocialMediaPage />} />
+<Route path="/internet-marketing/*" element={<DigitalMarketingPage />} />
+<Route path="/ai-photo-packages/*" element={<AIPhotoPage />} />
+<Route path="/ai-video-packages/*" element={<AIVideoPage />} />
+<Route path="/livechat-packages/*" element={<LivechatPage />} />
+<Route path="/mini-packages/*" element={<MiniPackagesPage />} />
         </Routes>
       </main>
       <Footer />
