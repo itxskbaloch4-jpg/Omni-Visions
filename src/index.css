@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-brown: #432c1c;
+  --brand-amber: #ffa602;
+  --brand-amber-light: #ffb733;
+  --brand-brown-dark: #1a0f08;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--brand-brown-dark);
+  color: #fff;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #1a0f08; }
+::-webkit-scrollbar-thumb { background: #ffa602; border-radius: 3px; }
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #ffa602 0%, #ffb733 50%, #432c1c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effects */
+.amber-glow {
+  box-shadow: 0 0 30px rgba(255, 166, 2, 0.3), 0 0 60px rgba(255, 166, 2, 0.1);
+}
+.amber-glow-text {
+  text-shadow: 0 0 30px rgba(255, 166, 2, 0.5);
+}
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Swiper custom */
+.swiper-pagination-bullet {
+  background: rgba(255, 166, 2, 0.4) !important;
+  opacity: 1 !important;
+}
+.swiper-pagination-bullet-active {
+  background: #ffa602 !important;
+  width: 24px !important;
+  border-radius: 4px !important;
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+}
