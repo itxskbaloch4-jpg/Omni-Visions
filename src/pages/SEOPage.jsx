@@ -6,7 +6,7 @@ const subServices = [
   { title: 'GEO Optimization', desc: 'Generative Engine Optimization to rank in AI-powered search results.', href: '/geo-optimization-packages/' },
   { title: 'Link Building', desc: 'High-authority backlink acquisition to boost your domain authority.', href: '/seo/link-building/' },
   { title: 'Local SEO', desc: 'Dominate local Google search results for your city or neighbourhood.', href: '/seo/local-seo/' },
-  { title: 'Advanced Conversion Tracking', desc: 'GA4, GTM, and heatmap setup to measure exactly what's working.', href: '/seo/advanced-conversion-tracking-services/' },
+  { title: 'Advanced Conversion Tracking', desc: 'GA4, GTM, and heatmap setup to measure exactly what is working.', href: '/seo/advanced-conversion-tracking-services/' },
   { title: 'Heat Mapping Services', desc: 'Visualize user behaviour to eliminate friction and lift conversions.', href: '/seo/heat-mapping-services/' },
 ]
 
