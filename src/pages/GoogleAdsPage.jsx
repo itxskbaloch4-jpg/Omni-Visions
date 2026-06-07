@@ -4,7 +4,7 @@ import { CheckCircle } from 'lucide-react'
 const subServices = [
   { title: 'Google Ads Packages', desc: 'Transparent monthly plans with clear deliverables and reporting.', href: '/google-ads/google-ads-packages/' },
   { title: 'Pay Per Click (PPC)', desc: 'Targeted ad campaigns that put your business in front of ready-to-buy customers.', href: '/google-ads/pay-per-click/' },
-  { title: 'Remarketing / Retargeting', desc: 'Re-engage visitors who didn't convert and bring them back.', href: '/google-ads/remarketing-retargeting/' },
+  { title: 'Remarketing / Retargeting', desc: 'Re-engage visitors who didn&apos;t convert and bring them back.', href: '/google-ads/remarketing-retargeting/' },
   { title: 'SEM Services', desc: 'Full search engine marketing management from strategy to optimization.', href: '/google-ads/sem-services/' },
   { title: 'SEM Consultant', desc: 'Expert consulting to audit and improve your existing campaigns.', href: '/google-ads/sem-consultant/' },
   { title: 'Local Search Marketing', desc: 'Dominate local ads and Google Maps for your service area.', href: '/google-ads/local-search-marketing/' },
