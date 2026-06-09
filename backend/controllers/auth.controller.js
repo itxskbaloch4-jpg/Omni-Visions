@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
 import Admin from '../models/Admin.model.js'
 
-const signToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' })
+const signToken = (id) =>
+  jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' })
 
 export const createFirstAdmin = async (req, res) => {
   try {
@@ -16,8 +17,9 @@ export const createFirstAdmin = async (req, res) => {
     const admin = await Admin.create({ name, email, password, role: 'superadmin' })
     const token = signToken(admin._id)
     res.status(201).json({ success: true, token, data: admin })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    console.error('createFirstAdmin error:', err)
+    res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
   }
 }
 
@@ -35,12 +37,15 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ success: false, message: 'Invalid credentials' })
     }
-    admin.lastLogin = new Date()
-    await admin.save({ validateBeforeSave: false })
+
+    // Fix #18 — use findByIdAndUpdate instead of save({ validateBeforeSave: false })
+    await Admin.findByIdAndUpdate(admin._id, { lastLogin: new Date() })
+
     const token = signToken(admin._id)
     res.json({ success: true, token, data: admin })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    console.error('login error:', err)
+    res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
   }
 }
 
@@ -51,10 +56,15 @@ export const getMe = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { name, email, avatar } = req.body
-    const admin = await Admin.findByIdAndUpdate(req.admin._id, { name, email, avatar }, { new: true, runValidators: true })
+    const admin = await Admin.findByIdAndUpdate(
+      req.admin._id,
+      { name, email, avatar },
+      { new: true, runValidators: true }
+    )
     res.json({ success: true, data: admin })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    console.error('updateProfile error:', err)
+    res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
   }
 }
 
@@ -68,7 +78,8 @@ export const changePassword = async (req, res) => {
     admin.password = newPassword
     await admin.save()
     res.json({ success: true, message: 'Password updated successfully' })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    console.error('changePassword error:', err)
+    res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
   }
-}
+      }
