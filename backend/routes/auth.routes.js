@@ -6,7 +6,8 @@ import { authLimiter } from '../middleware/rateLimit.middleware.js'
 const router = express.Router()
 
 router.post('/login', authLimiter, login)
-router.post('/setup', createFirstAdmin) // First-time setup only
+// Fix #7 & #15 — apply authLimiter to setup; it already self-locks after first admin is created
+router.post('/setup', authLimiter, createFirstAdmin)
 router.get('/me', protect, getMe)
 router.put('/profile', protect, updateProfile)
 router.put('/change-password', protect, changePassword)
