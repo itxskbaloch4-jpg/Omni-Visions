@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
 import Navbar from './components/layout/Navbar'
@@ -31,14 +31,44 @@ function ScrollToTop() {
   return null
 }
 
-function AppInner() {
+function NotFoundPage() {
+  return (
+    <div className="min-h-screen bg-brand-brown-dark flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="font-display text-8xl font-bold text-brand-amber mb-4">404</h1>
+        <p className="text-white/60 text-xl mb-8">Page not found</p>
+        <a href="/" className="inline-block px-8 py-3 bg-brand-amber text-brand-brown font-bold rounded-xl hover:bg-brand-amber-light transition-colors">
+          Back to Home
+        </a>
+      </div>
+    </div>
+  )
+}
+
+// Lenis lives at the root level — one instance, never recreated on route change
+function LenisProvider() {
+  const lenisRef = useRef(null)
+
   useEffect(() => {
-    const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true })
+    if (lenisRef.current) return
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    })
+    lenisRef.current = lenis
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf) }
     requestAnimationFrame(raf)
-    return () => lenis.destroy()
+    return () => {
+      lenis.destroy()
+      lenisRef.current = null
+    }
   }, [])
 
+  return null
+}
+
+function AppInner() {
   return (
     <>
       <ScrollToTop />
@@ -65,6 +95,7 @@ function AppInner() {
           <Route path="/ai-video-packages/*" element={<AIVideoPage />} />
           <Route path="/livechat-packages/*" element={<LivechatPage />} />
           <Route path="/mini-packages/*" element={<MiniPackagesPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
       <Footer />
@@ -75,12 +106,13 @@ function AppInner() {
 export default function App() {
   return (
     <BrowserRouter>
+      <LenisProvider />
       <Routes>
-        {/* Admin panel — completely separate layout */}
+        {/* Admin panel — completely separate layout, no Lenis/Navbar/Footer */}
         <Route path="/ov-admin/*" element={<AdminApp />} />
         {/* Main website */}
         <Route path="/*" element={<AppInner />} />
       </Routes>
     </BrowserRouter>
   )
-}
+  }
