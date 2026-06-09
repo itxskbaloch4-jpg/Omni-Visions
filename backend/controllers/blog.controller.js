@@ -4,8 +4,7 @@ export const getBlogs = async (req, res) => {
   try {
     const { status = 'published', page = 1, limit = 10, category, tag, search } = req.query
     const query = {}
-    
-    // Admin can see all, public only published
+
     if (!req.admin) query.status = 'published'
     else if (status !== 'all') query.status = status
 
@@ -25,19 +24,26 @@ export const getBlogs = async (req, res) => {
       .select('-content')
 
     res.json({ success: true, data: blogs, pagination: { total, page: Number(page), pages: Math.ceil(total / limit) } })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    console.error('getBlogs error:', err)
+    res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
   }
 }
 
 export const getBlog = async (req, res) => {
   try {
-    const blog = await Blog.findOne({ slug: req.params.slug }).populate('author', 'name avatar')
+    // Fix #11 — atomic findOneAndUpdate: single query, no race condition
+    const blog = await Blog.findOneAndUpdate(
+      { slug: req.params.slug },
+      { $inc: { views: 1 } },
+      { new: true }
+    ).populate('author', 'name avatar')
+
     if (!blog) return res.status(404).json({ success: false, message: 'Blog not found' })
-    await Blog.findByIdAndUpdate(blog._id, { $inc: { views: 1 } })
     res.json({ success: true, data: blog })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    console.error('getBlog error:', err)
+    res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
   }
 }
 
@@ -45,8 +51,9 @@ export const createBlog = async (req, res) => {
   try {
     const blog = await Blog.create({ ...req.body, author: req.admin._id })
     res.status(201).json({ success: true, data: blog })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    console.error('createBlog error:', err)
+    res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
   }
 }
 
@@ -55,8 +62,9 @@ export const updateBlog = async (req, res) => {
     const blog = await Blog.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
     if (!blog) return res.status(404).json({ success: false, message: 'Blog not found' })
     res.json({ success: true, data: blog })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    console.error('updateBlog error:', err)
+    res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
   }
 }
 
@@ -64,7 +72,8 @@ export const deleteBlog = async (req, res) => {
   try {
     await Blog.findByIdAndDelete(req.params.id)
     res.json({ success: true, message: 'Blog deleted' })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    console.error('deleteBlog error:', err)
+    res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
   }
-}
+    }
