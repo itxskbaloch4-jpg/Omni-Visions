@@ -47,7 +47,7 @@ export default function ContactPage() {
           clientName: `${fields.firstName.trim()} ${fields.lastName.trim()}`,
           clientEmail: fields.email.trim(),
           clientPhone: fields.phone.trim(),
-          service: fields.service || 'Not specified',
+          service: fields.service || 'consultation',
           notes: fields.message.trim(),
           preferredDate: new Date().toISOString(),
           preferredTime: 'Flexible',
