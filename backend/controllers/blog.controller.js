@@ -77,3 +77,24 @@ export const deleteBlog = async (req, res) => {
     res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
   }
     }
+export const createBlog = async (req, res) => {
+  try {
+    // Whitelist only known fields
+    const {
+      title, slug, excerpt, content, featuredImage,
+      categories, tags, status, metaTitle, metaDescription,
+      publishedAt,
+    } = req.body
+
+    const blog = await Blog.create({
+      title, slug, excerpt, content, featuredImage,
+      categories, tags, status, metaTitle, metaDescription,
+      publishedAt,
+      author: req.admin._id,
+    })
+    res.status(201).json({ success: true, data: blog })
+  } catch (err) {
+    console.error('createBlog error:', err)
+    res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
+  }
+}
