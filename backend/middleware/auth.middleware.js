@@ -16,6 +16,9 @@ export const protect = async (req, res, next) => {
     next()
   } catch (error) {
     res.status(401).json({ success: false, message: 'Token invalid' })
+      next()
+  } catch (error) {
+    res.status(401).json({ success: false, message: 'Token invalid' })
   }
 }
 
