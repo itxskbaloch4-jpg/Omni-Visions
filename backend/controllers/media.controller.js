@@ -60,3 +60,26 @@ export const deleteMedia = async (req, res) => {
     res.status(500).json({ success: false, message: error.message })
   }
 }
+// uploadMedia catch:
+} catch (error) {
+  console.error('uploadMedia error:', error)
+  res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
+}
+
+// getMedia catch:
+} catch (error) {
+  console.error('getMedia error:', error)
+  res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
+}
+
+// updateMediaMeta catch:
+} catch (error) {
+  console.error('updateMediaMeta error:', error)
+  res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
+}
+
+// deleteMedia catch:
+} catch (error) {
+  console.error('deleteMedia error:', error)
+  res.status(500).json({ success: false, message: 'An unexpected error occurred.' })
+}
