@@ -11,6 +11,7 @@ import blogRoutes from './routes/blog.routes.js'
 import mediaRoutes from './routes/media.routes.js'
 import pageRoutes from './routes/page.routes.js'
 import { errorHandler } from './middleware/error.middleware.js'
+import contactRoutes from './routes/contact.routes.js'
 import { apiLimiter } from './middleware/rateLimit.middleware.js'
 
 dotenv.config()
@@ -36,6 +37,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/site', siteRoutes)
 app.use('/api/appointments', appointmentRoutes)
 app.use('/api/blog', blogRoutes)
+app.use('/api/contact', contactRoutes)
 app.use('/api/media', mediaRoutes)
 app.use('/api/pages', pageRoutes)
 
